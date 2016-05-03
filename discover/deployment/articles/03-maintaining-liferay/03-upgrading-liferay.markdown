@@ -15,6 +15,67 @@ the possibility of faulty indexing and you save time during the upgrade
 process. Once you have upgraded your portal, remove this property or set it to
 `false` so that you can index all objects from Liferay's Control Panel.
 
+### Configuring your Document Library File Store
+
+#### CMIS
+	portal-ext.properties: dl.store.impl=com.liferay.portal.store.cmis.CMISStore
+	osgi/configs: com.liferay.portal.store.cmis.configuration.CMISStoreConfiguration.cfg
+	
+Property | Default | Required
+---------|---------|---------
+repositoryUrl | http://localhost:8080/alfresco/service/api/cmis | true
+credentialsUsername | none | true
+credentialsPassword | none | true
+systemRootDir | Liferay Home | true
+	
+#### File Store
+	portal-ext.properties: dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore
+	osgi/configs: com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.cfg
+
+Property | Default | Required
+---------|---------|---------
+rootDir | data/document_library | false
+
+#### Advanced File Store
+	portal-ext.properties: dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore
+	osgi/configs: com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.cfg
+	
+Property | Default | Required
+---------|---------|---------
+rootDir | data/document_library | false
+		
+#### JCR
+	portal-ext.properties: dl.store.impl=com.liferay.portal.store.jcr.JCRStore
+	osgi/configs: com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration.cfg
+
+Property | Default | Required
+---------|---------|---------
+initializeOnStartup | false| true
+wrapSession | true | true
+moveVersionLabels | false | true
+workspaceName | liferay | true
+nodeDocumentlibrary | documentlibrary| true
+jackrabbitRepositoryRoot | data/jackrabbit| true
+jackrabbitConfigFilePath | repository.xml | true
+jackrabbitRepositoryHome | home | true
+jackrabbitCredentialsUsername | none | true
+jackrabbitCredentialsPassword | none | true
+
+#### S3
+	portal-ext.properties: dl.store.impl=com.liferay.portal.store.s3.S3Store
+	osgi/configs: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.cfg
+
+Property | Default | Required
+---------|---------|---------
+accessKey | | false
+secretKey | | false
+s3Region | us-east-1 | false
+bucketName | | true
+s3StorageClass | STANDARD | false
+httpClientMaxConnections | 50 | false
+cacheDirCleanUpExpunge | 7 | false
+cacheDirCleanUpFrequency | 100 | false
+
 ## Running an Upgrade Manually [](id=running-an-upgrade-manually)
 
 The upgrade tool is located in Liferay's source code in the
