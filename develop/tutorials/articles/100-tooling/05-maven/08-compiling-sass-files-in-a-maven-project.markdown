@@ -21,7 +21,7 @@ Here's how to apply Liferay's CSS builder to your Maven project.
                     <id>default-build-css</id>
                     <phase>compile</phase>
                     <goals>
-                        <goal>build-css</goal>
+                        <goal>build</goal>
                     </goals>
                 </execution>
             </executions>
@@ -53,44 +53,11 @@ Here's how to apply Liferay's CSS builder to your Maven project.
           [Liferay Frontend Common CSS JAR](https://mvnrepository.com/artifact/com.liferay/com.liferay.frontend.css.common)
           file.
 
-2.  If you're using 
-    [Bourbon](http://bourbon.io/) in your Sass files, you'll need to 
-    [add an additional plugin dependency](/develop/tutorials/-/knowledge_base/7-0/configuring-dependencies) 
-    to your project's POM. If you're not using Bourbon, skip this step. Add the 
-    following plugin dependency: 
+2.  Use this command to compile your Maven project's Sass files:
 
-        <plugin>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-                <execution>
-                    <phase>generate-sources</phase>
-                    <goals>
-                        <goal>copy</goal>
-                    </goals>
-                    <configuration>
-                        <artifactItems>
-                            <artifactItem>
-                                <groupId>com.liferay</groupId>
-                                <artifactId>com.liferay.frontend.css.common</artifactId>
-                                <version>${com.liferay.frontend.css.common.version}</version>
-                            </artifactItem>
-                        </artifactItems>
-                        <outputDirectory>${project.build.directory}/deps</outputDirectory>
-                        <stripVersion>true</stripVersion>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+        mvn compile
 
-    The [maven-dependency-plugin](http://maven.apache.org/plugins/maven-dependency-plugin/)
-    copies the `com.liferay.frontend.css.common` dependency from Maven Central
-    to your project's build folder so the CSS Builder can leverage it.
-
-3.  Use this command to compile your Maven project's Sass files:
-
-        mvn liferay:build-css
-
-    Since the `build-css` goal is configured as a part of the `compile`
+    Since the `build` goal is configured as a part of the `compile`
     phase, this is also invoked by running `mvn compile`.
 
 Awesome! You can now compile Sass files in your Liferay Maven project.
