@@ -25,21 +25,16 @@ build a theme. You'll learn how to do this next.
                 <plugin>
                     <groupId>com.liferay</groupId>
                     <artifactId>com.liferay.portal.tools.theme.builder</artifactId>
-                    <version>${com.liferay.portal.tools.theme.builder.version}</version>
+                    <version>2.0.1</version>
                     <executions>
                         <execution>
                             <phase>generate-resources</phase>
                             <goals>
-                                <goal>build-theme</goal>
+                                <goal>build</goal>
                             </goals>
                             <configuration>
                                 <diffsDir>${maven.war.src}</diffsDir>
-                                <name>${project.artifactId}</name>
                                 <outputDir>${project.build.directory}/${project.build.finalName}</outputDir>
-                                <parentDir>${project.build.directory}/deps/com.liferay.frontend.theme.styled.jar</parentDir>
-                                <parentName>_styled</parentName>
-                                <templateExtension>ftl</templateExtension>
-                                <unstyledDir>${project.build.directory}/deps/com.liferay.frontend.theme.unstyled.jar</unstyledDir>
                             </configuration>
                         </execution>
                     </executions>
@@ -75,20 +70,19 @@ build a theme. You'll learn how to do this next.
         <plugin>
             <groupId>com.liferay</groupId>
             <artifactId>com.liferay.css.builder</artifactId>
-            <version>${com.liferay.css.builder.version}</version>
+            <version>1.0.24</version>
             <executions>
                 <execution>
                     <id>default-build-css</id>
                     <phase>compile</phase>
                     <goals>
-                        <goal>build-css</goal>
+                        <goal>build</goal>
                     </goals>
                 </execution>
             </executions>
             <configuration>
                 <docrootDirName>target/${project.build.finalName}</docrootDirName>
                 <outputDirName>/</outputDirName>
-                <portalCommonPath>target/deps/com.liferay.frontend.css.common.jar</portalCommonPath>
             </configuration>
         </plugin>
 
@@ -120,66 +114,6 @@ build a theme. You'll learn how to do this next.
         <artifactId>com.liferay.project.templates.theme</artifactId>
         <version>1.0.0</version>
         <packaging>war</packaging>
-
-5.  Building themes requires certain dependencies. You can 
-    [configure these dependenices](/develop/tutorials/-/knowledge_base/7-0/configuring-dependencies) 
-    in your project's `pom.xml` as directories or JAR files. If you choose to 
-    use JARs, you must apply the 
-    [maven-dependency-plugin](http://maven.apache.org/plugins/maven-dependency-plugin/) 
-    and have it copy JAR dependencies into your project from Maven Central: 
-
-        <plugin>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-                <execution>
-                    <phase>generate-sources</phase>
-                    <goals>
-                        <goal>copy</goal>
-                    </goals>
-                    <configuration>
-                        <artifactItems>
-                            <artifactItem>
-                                <groupId>com.liferay</groupId>
-                                <artifactId>com.liferay.frontend.css.common</artifactId>
-                                <version>${com.liferay.frontend.css.common.version}</version>
-                            </artifactItem>
-                            <artifactItem>
-                                <groupId>com.liferay</groupId>
-                                <artifactId>com.liferay.frontend.theme.styled</artifactId>
-                                <version>${com.liferay.frontend.theme.styled.version}</version>
-                            </artifactItem>
-                            <artifactItem>
-                                <groupId>com.liferay</groupId>
-                                <artifactId>com.liferay.frontend.theme.unstyled</artifactId>
-                                <version>${com.liferay.frontend.theme.unstyled.version}</version>
-                            </artifactItem>
-                        </artifactItems>
-                        <outputDirectory>${project.build.directory}/deps</outputDirectory>
-                        <stripVersion>true</stripVersion>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-
-    This configuration copies the `com.liferay.frontend.css.common`,
-    `com.liferay.frontend.theme.styled`, and
-    `com.liferay.frontend.theme.unstyled` dependencies into your Maven project.
-    Notice that you've set the `stripVersion` tag to `true` and you're setting
-    the artifact versions within each `artifactItem` tag. You'll set these
-    versions and a few other properties for your Maven project next.
-
-6.  Configure the properties for your project in its `pom.xml` file:
-
-        <properties>
-            <com.liferay.css.builder.version>1.0.20</com.liferay.css.builder.version>
-            <com.liferay.frontend.css.common.version>2.0.1</com.liferay.frontend.css.common.version>
-            <com.liferay.frontend.theme.styled.version>2.0.13</com.liferay.frontend.theme.styled.version>
-            <com.liferay.frontend.theme.unstyled.version>2.0.13</com.liferay.frontend.theme.unstyled.version>
-            <com.liferay.portal.tools.theme.builder.version>1.0.0</com.liferay.portal.tools.theme.builder.version>
-        </properties>
-
-    The properties above set the versions for the CSS and Theme Builder plugins
-    and their dependencies.
 
 You've successfully configured your Maven project to build a theme! You can
 generate your theme by calling the following Maven command:
